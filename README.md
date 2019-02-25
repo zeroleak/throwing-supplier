@@ -9,18 +9,13 @@ Memoize exceptions with Guava lazy-load / cache supplier.
 Exception thrown from supplier will be raised when accessing memoized data.
 
 
+## Install
+Install with Maven or Gradle from [JitPack](https://jitpack.io/#zeroleak/throwing-supplier)
+
 ## Usage
-See [src/test/java/com/zeroleak/throwingsupplier/JavaExample.java](src/test/java/com/zeroleak/throwingsupplier/JavaExample.java)
+See [JavaExample.java](src/test/java/com/zeroleak/throwingsupplier/JavaExample.java)
 
 
 ## Requirements
 Java >= 6
 
-
-## Build instructions
-Build with maven:
-
-```
-cd throwing-supplier
-mvn clean install -Dmaven.test.skip=true
-```
