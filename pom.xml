@@ -72,4 +72,9 @@
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+    <scm>
+        <connection>scm:git:https://github.com/zeroleak/throwing-supplier.git</connection>
+        <url>http://github.com/zeroleak/throwing-supplier</url>
+        <developerConnection>scm:git:https://github.com/zeroleak/throwing-supplier.git</developerConnection>
+    </scm>
 </project>
