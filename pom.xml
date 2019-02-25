@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.zeroleak</groupId>
     <artifactId>throwing-supplier</artifactId>
-    <version>master-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>throwing-supplier</name>
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
