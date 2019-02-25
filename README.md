@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Samourai-Wallet/boltzmann-java.svg?branch=develop)](https://travis-ci.org/Samourai-Wallet/boltzmann-java)
-[![](https://jitpack.io/v/Samourai-Wallet/boltzmann-java.svg)](https://jitpack.io/#Samourai-Wallet/boltzmann-java)
+[![Build Status](https://travis-ci.org/zeroleak/throwing-supplier.svg?branch=develop)](https://travis-ci.org/zeroleak/throwing-supplier)
+[![](https://jitpack.io/v/zeroleak/throwing-supplier.svg)](https://jitpack.io/#zeroleak/throwing-supplier)
 
 # Throwing-supplier
 
