@@ -5,28 +5,60 @@ import com.google.common.base.Suppliers;
 
 public class JavaExample {
 
-  public void example() throws Exception {
+  public void throwingExample() throws Exception {
 
     // compute memoized data with ThrowingSupplier
-    ThrowingSupplier<Object, Exception> catchingSupplier =
+    ThrowingSupplier<Object, Exception> throwingSupplier =
         new ThrowingSupplier<Object, Exception>() {
+          private boolean first = true;
+
           @Override
           public Object getOrThrow() throws Exception {
-
-            if (true) {
+            if (first) {
+              first = false;
+              return "data";
+            } else {
               // you can throw exception directly from supplier
               throw new Exception();
             }
-
-            // return data to be memoized
-            return "data";
           }
         };
 
     // use supplier with Guava
-    Supplier<Throwing<Object, Exception>> supplier = Suppliers.memoize(catchingSupplier);
+    Supplier<Throwing<Object, Exception>> supplier = Suppliers.memoize(throwingSupplier);
 
     // get memoized value
-    supplier.get().getOrThrow(); // will return "data" or throw Exception
+    supplier.get().getOrThrow(); // will return "data"
+    supplier.get().getOrThrow(); // will throw Exception
+  }
+
+  public void lastValueFallbackExample() throws Exception {
+
+    // compute memoized data with LastValueFallbackThrowingSupplier
+    ThrowingSupplier<Object, Exception> throwingSupplier =
+        new LastValueFallbackSupplier<Object, Exception>() {
+          private boolean first = true;
+
+          @Override
+          public Object getOrThrow() throws Exception {
+            if (first) {
+              first = false;
+              return "data";
+            } else {
+              // you can throw exception directly from supplier
+              throw new Exception();
+            }
+          }
+        };
+
+    // use supplier with Guava
+    Supplier<Throwing<Object, Exception>> supplier = Suppliers.memoize(throwingSupplier);
+
+    // get memoized value
+    supplier.get().getOrThrow(); // will return "data"
+    supplier
+        .get()
+        .getOrThrow(); // will return "data" even though ThrowingSupplier returned an exception
+    // (fallback to last non-throwing value)
   }
 }
