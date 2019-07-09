@@ -25,7 +25,8 @@ public class JavaExample {
         };
 
     // use supplier with Guava, 2 attempts
-    Supplier<Throwing<Object, Exception>> supplier = Suppliers.memoize(throwingSupplier.attempts(2));
+    Supplier<Throwing<Object, Exception>> supplier =
+        Suppliers.memoize(throwingSupplier.attempts(2));
 
     // get memoized value
     supplier.get().getOrThrow(); // will return "data"
@@ -52,7 +53,8 @@ public class JavaExample {
         };
 
     // use supplier with Guava, 2 attempts
-    Supplier<Throwing<Object, Exception>> supplier = Suppliers.memoize(throwingSupplier.attempts(2));
+    Supplier<Throwing<Object, Exception>> supplier =
+        Suppliers.memoize(throwingSupplier.attempts(2));
 
     // get memoized value
     supplier.get().getOrThrow(); // will return "data"
