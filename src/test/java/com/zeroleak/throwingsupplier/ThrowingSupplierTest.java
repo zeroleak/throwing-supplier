@@ -54,6 +54,30 @@ public class ThrowingSupplierTest {
   }
 
   @Test
+  public void testValueAttempts() throws Exception {
+
+    // supplier returning value
+    ThrowingSupplier<Integer, IllegalArgumentException> throwingSupplier =
+        new ThrowingSupplier<Integer, IllegalArgumentException>() {
+          private boolean initial = true;
+
+          @Override
+          public Integer getOrThrow() throws IllegalArgumentException {
+            if (initial) {
+                initial =  false;
+              throw new IllegalArgumentException("initial attempt fails");
+            }
+            return 1234;
+          }
+        };
+    Supplier<Throwing<Integer, IllegalArgumentException>> supplier =
+        Suppliers.memoize(throwingSupplier.attempts(2));
+
+    // verify value returned
+    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+  }
+
+  @Test
   public void testLastValueFallback() throws Exception {
 
     // supplier returning value
@@ -86,4 +110,43 @@ public class ThrowingSupplierTest {
     }
     Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
   }
+
+    @Test
+    public void testLastValueFallbackAttempts() throws Exception {
+
+        // supplier returning value
+        ThrowingSupplier<Integer, IllegalArgumentException> throwingSupplier =
+                new LastValueFallbackSupplier<Integer, IllegalArgumentException>() {
+                    private boolean initial = true;
+                    private boolean first = true;
+
+                    @Override
+                    public Integer getOrThrow() throws IllegalArgumentException {
+                        if (initial) {
+                            initial =  false;
+                            throw new IllegalArgumentException("initial attempt fails");
+                        }
+                        if (first) {
+                            System.out.println("returning value");
+                            first = false;
+                            return 1234;
+                        } else {
+                            System.out.println("returning exception");
+                            // you can throw exception directly from supplier
+                            throw new IllegalArgumentException("foo");
+                        }
+                    }
+                };
+
+        Supplier<Throwing<Integer, IllegalArgumentException>> supplier =
+                Suppliers.memoizeWithExpiration(throwingSupplier.attempts(2), 1, TimeUnit.MICROSECONDS);
+
+        // verify value returned
+        Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+
+        synchronized (this) {
+            wait(1000);
+        }
+        Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    }
 }
