@@ -1,7 +1,11 @@
 package com.zeroleak.throwingsupplier;
 
+import com.google.common.base.ExpiringMemoizingSupplierUtil;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
+import org.junit.jupiter.api.Assertions;
+
+import java.util.concurrent.TimeUnit;
 
 public class JavaExample {
 
@@ -62,5 +66,30 @@ public class JavaExample {
         .get()
         .getOrThrow(); // will return "data" even though ThrowingSupplier returned an exception
     // (fallback to last non-throwing value)
+  }
+
+  public void expireExample() {
+      Supplier<Integer> supplier = Suppliers.memoizeWithExpiration(new Supplier<Integer>() {
+          private int value=1;
+          @Override
+          public Integer get() throws IllegalArgumentException {
+              return value++;
+          }
+      }, 1, TimeUnit.HOURS);
+
+      // new computed value
+      Assertions.assertEquals(new Integer(1), supplier.get());
+
+      // last memoized value
+      Assertions.assertEquals(new Integer(1), supplier.get());
+
+      // last memoized value
+      Assertions.assertEquals(new Integer(1), supplier.get());
+
+      // force expiry
+      ExpiringMemoizingSupplierUtil.expire(supplier);
+
+      // new computed value
+      Assertions.assertEquals(new Integer(2), supplier.get());
   }
 }

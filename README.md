@@ -16,6 +16,8 @@ Use ```LastValueFallbackSupplier``` for to memoize last non-throwing value when 
 
 Exception thrown from your supplier will be catched when accessing memoized data, and last non-throwing value will be returned. If there is no such value, Exception will be raised.
 
+## ExpiringMemoizingSupplierUtil
+Force ExpiringMemoizingSupplier expiration.
 
 
 
