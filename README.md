@@ -3,7 +3,7 @@
 
 
 # Throwing-supplier
-Memoize exceptions with Guava lazy-load / cache supplier. Multiple attempts. Fallback to last non-throwing value.
+Guava cache supplier extension to memoize exceptions, fallback, expiration control.
 
 ## ThrowingSupplier
 Use ```ThrowingSupplier``` to memoize exceptions with Guava lazy-load / cache supplier, when failing after N attempts.
