@@ -4,7 +4,7 @@ import com.google.common.base.ExpiringMemoizingSupplierUtil;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
 
 public class JavaExample {
 
@@ -82,18 +82,18 @@ public class JavaExample {
             TimeUnit.HOURS);
 
     // new computed value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // force expiry
     ExpiringMemoizingSupplierUtil.expire(supplier);
 
     // new computed value
-    Assertions.assertEquals(new Integer(2), supplier.get());
+    Assert.assertEquals(new Integer(2), supplier.get());
   }
 }

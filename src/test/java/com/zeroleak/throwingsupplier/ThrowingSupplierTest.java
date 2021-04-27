@@ -3,9 +3,8 @@ package com.zeroleak.throwingsupplier;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class ThrowingSupplierTest {
 
@@ -24,11 +23,11 @@ public class ThrowingSupplierTest {
         Suppliers.memoize(throwingSupplier);
 
     // verify value returned
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
   }
 
   @Test
-  public void testException() {
+  public void testException() throws Exception {
 
     // supplier throwing exception
     ThrowingSupplier<Integer, IllegalArgumentException> catchingSupplier =
@@ -42,15 +41,12 @@ public class ThrowingSupplierTest {
         Suppliers.memoize(catchingSupplier);
 
     // verify exception thrown
-    Assertions.assertThrows(
-        IllegalArgumentException.class,
-        new Executable() {
-          @Override
-          public void execute() throws Throwable {
-            supplier.get().getOrThrow();
-          }
-        },
-        "foo");
+    try {
+      supplier.get().getOrThrow();
+      Assert.assertTrue(false);
+    } catch (IllegalArgumentException e) {
+      // expected
+    }
   }
 
   @Test
@@ -74,7 +70,7 @@ public class ThrowingSupplierTest {
         Suppliers.memoize(throwingSupplier.attempts(2));
 
     // verify value returned
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
   }
 
   @Test
@@ -103,12 +99,12 @@ public class ThrowingSupplierTest {
         Suppliers.memoizeWithExpiration(throwingSupplier, 1, TimeUnit.MICROSECONDS);
 
     // verify value returned
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
 
     synchronized (this) {
       wait(1000);
     }
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
   }
 
   @Test
@@ -142,11 +138,11 @@ public class ThrowingSupplierTest {
         Suppliers.memoizeWithExpiration(throwingSupplier.attempts(2), 1, TimeUnit.MICROSECONDS);
 
     // verify value returned
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
 
     synchronized (this) {
       wait(1000);
     }
-    Assertions.assertEquals(new Integer(1234), supplier.get().getOrThrow());
+    Assert.assertEquals(new Integer(1234), supplier.get().getOrThrow());
   }
 }

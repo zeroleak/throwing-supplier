@@ -1,8 +1,8 @@
 package com.google.common.base;
 
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class ExpiringMemoizingSupplierUtilTest {
 
@@ -24,36 +24,36 @@ public class ExpiringMemoizingSupplierUtilTest {
             TimeUnit.HOURS);
 
     // new computed value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(1), supplier.get());
+    Assert.assertEquals(new Integer(1), supplier.get());
 
     // force expiry
     ExpiringMemoizingSupplierUtil.expire(supplier);
 
     // new computed value
-    Assertions.assertEquals(new Integer(2), supplier.get());
+    Assert.assertEquals(new Integer(2), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(2), supplier.get());
+    Assert.assertEquals(new Integer(2), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(2), supplier.get());
+    Assert.assertEquals(new Integer(2), supplier.get());
 
     // force expiry
     ExpiringMemoizingSupplierUtil.expire(supplier);
 
     // new computed value
-    Assertions.assertEquals(new Integer(3), supplier.get());
+    Assert.assertEquals(new Integer(3), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(3), supplier.get());
+    Assert.assertEquals(new Integer(3), supplier.get());
 
     // last memoized value
-    Assertions.assertEquals(new Integer(3), supplier.get());
+    Assert.assertEquals(new Integer(3), supplier.get());
   }
 }
